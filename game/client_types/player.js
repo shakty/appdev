@@ -115,10 +115,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     {
                         name: 'ChoiceTable',
                         id: 'grade',
-                        mainText: 'Academic grade:',
-                        choicesSetSize: 5,
+                        mainText: 'What is your highest academic grade?',
+                        choicesSetSize: 6,
                         choices: [
-                            'Bachelor', 'Master', 'PhD', 'Post Graduate', 'Prof'
+                            'Bachelor', 'Master', 'PhD', 'Post Graduate', 'Prof', 'Dean'
                         ]
                     },
 
@@ -132,6 +132,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     stager.extendStep('skills', {
+        cb: function() {
+            parent.scrollTo(0,0);
+        },
         // cb: function() {
         //     // Modify CSS rules on the fly.
         //     W.cssRule('.choicetable-left, .choicetable-right ' +
@@ -148,14 +151,44 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 id: 'skills',
                 mainText: 'All questions are optional.',
                 forms: [
-
+                    {
+                        name: 'ChoiceTable',
+                        id: 'languages',
+                        selectMultiple: true,
+                        mainText: 'Which of the following computer languages have you already used?',
+                        hint: 'Select all that you have used at least once.',
+                        choicesSetSize: 6,
+                        choices: [
+                            'JavaScript', 'Stata', 'HTML', 'CSS', 'Markdown',
+                            'Python', 'R', 'Java', 'Matlab', 'Julia', 'Rust',
+                            'Scala', 'C', 'C++', 'PHP', 'Go', 'TypeScript', 'Other'
+                        ]
+                    },
                     {
                         name: 'ChoiceTable',
                         id: 'programming',
-                        mainText: 'How skillful of a programmer you are?',
+                        mainText: 'How skillful of a programmer you are in your favorite programming language?',
                         hint: 'Please read about the <a href="https://www.psychologytoday.com/us/basics/dunning-kruger-effect" target="_blank">Dunning-Kruger</a> effects.',
                         choices: [ 'Never programmed', 'Beginner',
                         'Intermediate', 'Advanced', 'I created the Matrix' ]
+                    },
+                    {
+                        name: 'ChoiceTable',
+                        id: 'editor',
+                        selectMultiple: true,
+                        mainText: 'What text editor do you usually use for programming?',
+                        choices: [
+                            'Atom', 'Visual Studio Code', 'R Studio', 'Sublime', 'Other',
+                            'Text Editor?'
+                        ]
+                    },
+                    {
+                        name: 'ChoiceTable',
+                        id: 'terminal',
+                        mainText: 'Would you say that you are confortable using a Terminal?',
+                        choices: [
+                            'Yes',  'No', 'Terminal?'
+                        ]
                     },
                     {
                         name: 'ChoiceTable',
@@ -167,8 +200,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         choices: [
                             'Arrow functions', 'Map-reduce patterns', 'Restful APIs',
                             'jQuery', 'Bootstrap', 'Cordova', 'Ionic Framework',
-                            'Express', 'HTML', 'JavaScript', 'Asynchronous functions',
-                            'Python', 'R', 'Java', 'Matlab'
+                            'ExpressJS', 'Asynchronous functions', 'Debugger',
+                            'React', 'Angular', 'Developer Console', 'Git', 'Heroku'
                         ]
                     }
                 ]
@@ -183,6 +216,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('goals', {
         // frame: 'survey.htm',
         // Make a widget step.
+        cb: function() {
+            parent.scrollTo(0,0);
+        },
         name: 'Goals for the Workshop',
         widget: {
             name: 'ChoiceManager',
@@ -190,19 +226,27 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 id: 'goal',
                 mainText: 'All questions are optional.',
                 forms: [
-
                     {
                         name: 'ChoiceTable',
                         id: 'project',
                         mainText: 'I would like to create a: ',
                         choices: [
-                            'Mobile app',
                             'Web app',
                             'Chrome extension',
-                            'Behavioral Experiment',
-                            'Not sure yet'
+                            'Mobile app',
+                            'Behavioral Experiment/Survey (like this one)',
+                            'Not quite sure yet'
                         ],
                         orientation: 'v'
+                    },
+                    {
+                        name: 'ChoiceTable',
+                        id: 'prep',
+                        mainText: 'This course assumes some knowledge of computer programming and JavaScript.</br>Would you like a quick prep lecture before the beginning of the workshop?',
+                        hint: 'Somewhen May 3-5',
+                        choices: [
+                            'Yes', 'No'
+                        ]
                     },
                     {
                         name: 'Feedback',
