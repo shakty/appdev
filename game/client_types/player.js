@@ -60,15 +60,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     stager.extendStep('demographics', {
-        // cb: function() {
-        //     // Modify CSS rules on the fly.
-        //     W.cssRule('.choicetable-left, .choicetable-right ' +
-        //     '{ width: 200px !important; }');
-        //
-        //     W.cssRule('table.choicetable td { text-align: left !important; ' +
-        //     'font-weight: normal; padding-left: 10px; }');
-        // },
-
         // Make a widget step.
         widget: {
             name: 'ChoiceManager',
@@ -77,7 +68,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 mainText: 'All questions are optional.',
                 forms: [
                     {
-                        name: 'ChoiceTable',
                         id: 'gender',
                         mainText: 'What is your gender?',
                         choices: [ 'Male', 'Female', 'Other' ],
@@ -113,7 +103,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         hint: 'E.g., Economics, Psychology, Political Science, etc.'
                     },
                     {
-                        name: 'ChoiceTable',
                         id: 'grade',
                         mainText: 'What is your highest academic grade?',
                         choicesSetSize: 6,
@@ -132,17 +121,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     stager.extendStep('skills', {
-        cb: function() {
-            parent.scrollTo(0,0);
-        },
-        // cb: function() {
-        //     // Modify CSS rules on the fly.
-        //     W.cssRule('.choicetable-left, .choicetable-right ' +
-        //     '{ width: 200px !important; }');
-        //
-        //     W.cssRule('table.choicetable td { text-align: left !important; ' +
-        //     'font-weight: normal; padding-left: 10px; }');
-        // },
         name: 'Programming skills',
         // Make a widget step.
         widget: {
@@ -152,7 +130,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 mainText: 'All questions are optional.',
                 forms: [
                     {
-                        name: 'ChoiceTable',
                         id: 'languages',
                         selectMultiple: true,
                         mainText: 'Which of the following computer languages have you already used?',
@@ -165,7 +142,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         ]
                     },
                     {
-                        name: 'ChoiceTable',
                         id: 'programming',
                         mainText: 'How skillful of a programmer you are in your favorite programming language?',
                         hint: 'Please read about the <a href="https://www.psychologytoday.com/us/basics/dunning-kruger-effect" target="_blank">Dunning-Kruger</a> effects.',
@@ -173,7 +149,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         'Intermediate', 'Advanced', 'I created the Matrix' ]
                     },
                     {
-                        name: 'ChoiceTable',
                         id: 'editor',
                         selectMultiple: true,
                         mainText: 'What text editor do you usually use for programming?',
@@ -183,7 +158,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         ]
                     },
                     {
-                        name: 'ChoiceTable',
                         id: 'terminal',
                         mainText: 'Would you say that you are confortable using a Terminal?',
                         choices: [
@@ -191,7 +165,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         ]
                     },
                     {
-                        name: 'ChoiceTable',
                         id: 'js',
                         selectMultiple: true,
                         mainText: 'During your journey in computer programming have you ever encountered:',
@@ -216,9 +189,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('goals', {
         // frame: 'survey.htm',
         // Make a widget step.
-        cb: function() {
-            parent.scrollTo(0,0);
-        },
         name: 'Goals for the Workshop',
         widget: {
             name: 'ChoiceManager',
@@ -227,7 +197,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 mainText: 'All questions are optional.',
                 forms: [
                     {
-                        name: 'ChoiceTable',
                         id: 'project',
                         mainText: 'I would like to create a: ',
                         choices: [
@@ -235,19 +204,20 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                             'Chrome extension',
                             'Mobile app',
                             'Behavioral Experiment/Survey (like this one)',
+                            'Widget Instrument for NodeGame',
+                            'Collect data from public API / web scraping',
                             'Not quite sure yet'
                         ],
                         orientation: 'v'
                     },
-                    {
-                        name: 'ChoiceTable',
-                        id: 'prep',
-                        mainText: 'This course assumes some knowledge of computer programming and JavaScript.</br>Would you like a quick prep lecture before the beginning of the workshop?',
-                        hint: 'Somewhen May 3-5',
-                        choices: [
-                            'Yes', 'No'
-                        ]
-                    },
+                    // {
+                    //     id: 'prep',
+                    //     mainText: 'This course assumes some knowledge of computer programming and JavaScript.</br>Would you like a quick prep lecture before the beginning of the workshop?',
+                    //     hint: 'Somewhen May 3-5',
+                    //     choices: [
+                    //         'Yes', 'No'
+                    //     ]
+                    // },
                     {
                         name: 'Feedback',
                         id: 'feedback',
