@@ -36,7 +36,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 let db = memory.player[id];
                 db.save('data.csv', {
                     flatten: true,
-                    append: true
+                    append: true,
+                    header: 'all'
                 });
             }
         });
