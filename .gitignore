@@ -1,3 +1,4 @@
+*.csv
 npm-debug.log
 \#*\#
 .\#*

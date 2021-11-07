@@ -100,7 +100,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         name: 'CustomInput',
                         id: 'discipline',
                         mainText: 'What is your core discipline?',
-                        hint: 'E.g., Economics, Psychology, Political Science, etc.'
+                        hint: 'E.g., Economics, Psychology, Political Science, etc.',
+                        width: '95%'
                     },
                     {
                         id: 'grade',
@@ -159,22 +160,29 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     },
                     {
                         id: 'terminal',
-                        mainText: 'Would you say that you are confortable using a Terminal?',
+                        mainText: 'Would you say that you are comfortable using a Terminal?',
                         choices: [
                             'Yes',  'No', 'Terminal?'
                         ]
                     },
                     {
+                        id: 'git',
+                        mainText: 'Would you say that you are comfortable using Git?',
+                        choices: [
+                            'Yes',  'No', 'Git?'
+                        ]
+                    },
+                    {
                         id: 'js',
                         selectMultiple: true,
-                        mainText: 'During your journey in computer programming have you ever encountered:',
+                        mainText: 'During your journey in computer programming have you ever encountered any of the following frameworks/patterns/platforms:',
                         hint: 'Select all that you have used at least once.',
                         choicesSetSize: 5,
                         choices: [
                             'Arrow functions', 'Map-reduce patterns', 'Restful APIs',
                             'jQuery', 'Bootstrap', 'Cordova', 'Ionic Framework',
                             'ExpressJS', 'Asynchronous functions', 'Debugger',
-                            'React', 'Angular', 'Developer Console', 'Git', 'Heroku'
+                            'React', 'Angular', 'Developer Console', 'Netlify', 'Heroku'
                         ]
                     }
                 ]
@@ -196,16 +204,29 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 id: 'goal',
                 mainText: 'All questions are optional.',
                 forms: [
+                    // {
+                    //     id: 'project',
+                    //     mainText: 'I would like to create a: ',
+                    //     choices: [
+                    //         'Web app',
+                    //         'Chrome extension',
+                    //         'Mobile app',
+                    //         'Behavioral Experiment/Survey (like this one)',
+                    //         'Widget Instrument for NodeGame',
+                    //         'Collect data from public API / web scraping',
+                    //         'Not quite sure yet'
+                    //     ],
+                    //     orientation: 'v'
+                    // },
                     {
                         id: 'project',
-                        mainText: 'I would like to create a: ',
+                        mainText: 'From this introductory course I am mainly expecting to learn: ',
                         choices: [
-                            'Web app',
-                            'Chrome extension',
-                            'Mobile app',
-                            'Behavioral Experiment/Survey (like this one)',
-                            'Widget Instrument for NodeGame',
-                            'Collect data from public API / web scraping',
+                            'The basics of computer programming in general',
+                            'The foundations of JavaScript',
+                            'How to create a web app',
+                            'How to collect data from public APIs / web scraping',
+                            'I have my own project I would like some help with',
                             'Not quite sure yet'
                         ],
                         orientation: 'v'

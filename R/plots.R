@@ -1,19 +1,22 @@
-
-
 install.packages("ggplot2")
 library(ggplot2)
 install.packages("ggpubr")
 install.packages("stringr")
 library(stringr)
-
+library(tibble)
+library(tidyr)
+library(data.table)
+library(readr)
 
 ## To save the plots in "plots" folder.
 ifelse(!dir.exists(file.path("./plots")),
        dir.create(file.path("./plots")), FALSE)
 
 ## Please upload the necessary data and name it "data" as below.
-##data <- read_csv("./data.csv")
+data <- read_csv("./data.csv")
 n <- nrow(data)
+
+
 
 ###################
 
@@ -38,10 +41,8 @@ disciplines <- na.omit(unique(tolower(data$discipline.value)))
 discipline <- data.frame(label= rep(NA,length(disciplines)),value=rep(NA,length(disciplines)))
 
 for (i in 1:length(disciplines)) {
-
   discipline$label[i] <- disciplines[i]
   discipline$value[i] <- length(data$discipline.value[data$discipline.value == disciplines[i]])
-
 }
 
 
@@ -105,11 +106,13 @@ languages <- data.frame(label=c(
             Python, R, Java, Matlab, Julia, Rust,
             Scala, C, Cplus, PHP, Go, TypeScript, Other))
 
+languages <- languages[languages$value > 0 | languages$label == "JavaScript",]
+languages <- languages[order(languages$value),]
 
-ggplot(languages, aes(x=factor(label, level = rev(c(
-  'JavaScript', 'Stata', 'HTML', 'CSS', 'Markdown',
-  'Python', 'R', 'Java', 'Matlab', 'Julia', 'Rust',
-  'Scala', 'C', 'C++', 'PHP', 'Go', 'TypeScript', 'Other'))), y=value)) +
+languages$lang = with(languages, reorder(label, value))
+
+
+ggplot(languages, aes(lang, y=value)) +
   geom_bar(stat = "identity",width=0.3) + theme_minimal() + coord_flip() +
   ggtitle('Which of the following computer languages \n have you already used?') +
     xlab("") + ylab("") +
@@ -126,16 +129,17 @@ Intermediate <- sum(na.omit(str_count(data$programming.value, "Intermediate")))
 Advanced <- sum(na.omit(str_count(data$programming.value, "Advanced")))
 Matrix <- sum(na.omit(str_count(data$programming.value, "Matrix")))
 
+
+
+
 programming <- data.frame(label=c('Never programmed', 'Beginner',
                                   'Intermediate', 'Advanced', 'I created the Matrix'),
                                   value=c(Never, Beginner,
                                   Intermediate, Advanced, Matrix))
 
+programming$label = with(programming, reorder(label, value))
 
-ggplot(programming, aes(x=factor(label, level = c('Never programmed', 'Beginner',
-                                                   'Intermediate', 'Advanced',
-                                                    'I created the Matrix')),
-                         y=value)) +
+ggplot(programming, aes(x=label, y=value)) +
   geom_bar(stat = "identity",width=0.3) + theme_minimal() + coord_flip() +
   ggtitle('How skillful of a programmer you are \n in your favorite programming language?') +
   xlab("") + ylab("") +
@@ -176,7 +180,7 @@ terminal <- data.frame(label=c('Yes',  'No', 'Terminal?'),value=c(Yes, No, Termi
 
 ggplot(terminal, aes(x=factor(label, level = c('Yes',  'No', 'Terminal?')), y=value)) +
   geom_bar(stat = "identity",width=0.3) + theme_minimal() +
-  ggtitle("Would you say that you are confortable \n using a Terminal?") +  xlab("") +
+  ggtitle("Would you say that you are comfortable \n using a Terminal?") +  xlab("") +
   ylab("") +
   theme(text = element_text(size=20),
         plot.margin = margin(0.5, 1, 1, 0.5, "cm"))
@@ -233,6 +237,8 @@ Widget  <- sum(na.omit(str_count(data$project.value , "Widget")))
 Collect <- sum(na.omit(str_count(data$project.value , "Collect")))
 Not <- sum(na.omit(str_count(data$project.value , "Not")))
 
+
+
 project <-  data.frame(label=c('Web app',
                                'Chrome extension',
                                'Mobile app',
@@ -242,15 +248,12 @@ project <-  data.frame(label=c('Web app',
                                'Not quite sure yet'),value=c(Web, Chrome, Mobile, Behavioral,
                                                              Widget, Collect, Not))
 
-ggplot(project, aes(x=factor(label, level =c('Web app',
-                                             'Chrome extension',
-                                             'Mobile app',
-                                             'Behavioral Experiment / \nSurvey (like this one)',
-                                             'Widget Instrument for NodeGame',
-                                             'Collect data from public API / \n web scraping',
-                                             'Not quite sure yet')), y=value)) +
+
+project$label = with(project, reorder(label, value))
+
+ggplot(project, aes(x=label, y=value)) +
   geom_bar(stat = "identity", width=0.3) + theme_minimal() + coord_flip() +
-  ggtitle('I would like to create a:') +  xlab("") + ylab("") + 
+  ggtitle('I would like to create a:') +  xlab("") + ylab("") +
   theme(text = element_text(size=20),
         plot.margin = margin(0.5, 1, 1, 0.5, "cm"))
 
