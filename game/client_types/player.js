@@ -105,10 +105,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     },
                     {
                         id: 'grade',
-                        mainText: 'What is your highest academic grade?',
+                        mainText: 'What is your current academic position?',
                         choicesSetSize: 6,
                         choices: [
-                            'Bachelor', 'Master', 'PhD', 'Post Graduate', 'Prof', 'Dean'
+                            'Bachelor Student', 'Master Student', 'PhD Student', 'Postdoc', 'Prof', 'Dean'
                         ]
                     },
 
