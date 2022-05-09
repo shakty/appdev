@@ -208,6 +208,15 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 forms: [
                     {
                         id: 'project',
+                        mainText: 'Did you take part in the intro course in Nov 2021? ',
+                        choices: [
+                            'Yes',
+                            'No',
+                            'Don\'t remember'
+                        ]
+                    },
+                    {
+                        id: 'project',
                         mainText: 'From this course, I would like how to learn how to create a: ',
                         choices: [
                             'Web app',
