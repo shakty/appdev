@@ -41,7 +41,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // Add widgets.
         this.visuaStage = node.widgets.append('VisualStage', header);
         // this.visualRound = node.widgets.append('VisualRound', header);
-        this.doneButton = node.widgets.append('DoneButton', header);
+        this.doneButton = node.widgets.append('DoneButton', header, { 
+            text: "Next" 
+        });
 
         // No need to show the wait for other players screen in single-player
         // games.
@@ -204,41 +206,41 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 id: 'goal',
                 mainText: 'All questions are optional.',
                 forms: [
+                    {
+                        id: 'project',
+                        mainText: 'From this course, I would like how to learn how to create a: ',
+                        choices: [
+                            'Web app',
+                            'Chrome extension',
+                            'Mobile app',
+                            'Behavioral Experiment/Survey (like this one)',
+                            'Collect data from public API / web scraping',
+                            'Not quite sure yet'
+                        ],
+                        orientation: 'v'
+                    },
+                  
                     // {
                     //     id: 'project',
-                    //     mainText: 'I would like to create a: ',
+                    //     mainText: 'From this introductory course I am mainly expecting to learn: ',
                     //     choices: [
-                    //         'Web app',
-                    //         'Chrome extension',
-                    //         'Mobile app',
-                    //         'Behavioral Experiment/Survey (like this one)',
-                    //         'Widget Instrument for NodeGame',
-                    //         'Collect data from public API / web scraping',
+                    //         'The basics of computer programming in general',
+                    //         'The foundations of JavaScript',
+                    //         'How to create a web app',
+                    //         'How to collect data from public APIs / web scraping',
+                    //         'I have my own project I would like some help with',
                     //         'Not quite sure yet'
                     //     ],
                     //     orientation: 'v'
                     // },
                     {
-                        id: 'project',
-                        mainText: 'From this introductory course I am mainly expecting to learn: ',
+                        id: 'prep',
+                        mainText: 'This course assumes some knowledge of computer programming and JavaScript.</br>Are you interested in a <em>quick</em> prep lecture before the beginning of the workshop?',
+                        hint: 'Prep lecture to take place on the morning of the same day of the first lecture.',
                         choices: [
-                            'The basics of computer programming in general',
-                            'The foundations of JavaScript',
-                            'How to create a web app',
-                            'How to collect data from public APIs / web scraping',
-                            'I have my own project I would like some help with',
-                            'Not quite sure yet'
-                        ],
-                        orientation: 'v'
+                            'Yes', 'No'
+                        ]
                     },
-                    // {
-                    //     id: 'prep',
-                    //     mainText: 'This course assumes some knowledge of computer programming and JavaScript.</br>Would you like a quick prep lecture before the beginning of the workshop?',
-                    //     hint: 'Somewhen May 3-5',
-                    //     choices: [
-                    //         'Yes', 'No'
-                    //     ]
-                    // },
                     {
                         name: 'Feedback',
                         id: 'feedback',

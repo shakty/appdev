@@ -1,19 +1,18 @@
-install.packages("ggplot2")
 library(ggplot2)
-install.packages("ggpubr")
-install.packages("stringr")
+library(ggpubr)
 library(stringr)
 library(tibble)
 library(tidyr)
 library(data.table)
 library(readr)
+library(scales)
 
 ## To save the plots in "plots" folder.
 ifelse(!dir.exists(file.path("./plots")),
        dir.create(file.path("./plots")), FALSE)
 
 ## Please upload the necessary data and name it "data" as below.
-data <- read_csv("./data.csv")
+data <- read_csv("./introappdev/data.csv")
 n <- nrow(data)
 
 
@@ -36,7 +35,18 @@ ggplot(gender, aes(x=label, y=value)) +
 ggsave("./plots/gender.png", width = 20, height = 20, units = "cm")
 
 ####################
-disciplines <- na.omit(unique(tolower(data$discipline.value)))
+
+## Fixing typos / simplifying.
+data$discipline.value2 <- c("Political Science", NA,
+                           "Computational Social Science",
+                           "Data Analytics for Politics, Society and Complex Organizations",
+                           "Computational Social Science",
+                           "Political Science",
+                           "Law",
+                           "Computational Social Science",
+                           "Informatics", "Communications & Marketing")
+
+disciplines <- na.omit(unique(tolower(data$discipline.value2)))
 
 discipline <- data.frame(label= rep(NA,length(disciplines)),value=rep(NA,length(disciplines)))
 
@@ -50,7 +60,8 @@ ggplot(discipline, aes(x=label, y=value)) +
   geom_bar(stat = "identity",width=0.3) + theme_minimal() + coord_flip() +
   ggtitle('What is your core discipline?') +  xlab("") + ylab("") +
   theme(text = element_text(size=20),
-        plot.margin = margin(0.5, 1, 1, 0.5, "cm"))
+        plot.margin = margin(0.5, 1, 1, 0.5, "cm")) +
+    scale_y_continuous(breaks= pretty_breaks())
 
 ggsave("./plots/discipline.png", width = 30, height = 20, units = "cm")
 
@@ -64,15 +75,17 @@ postGraduate <- sum(na.omit(str_count(data$grade.value, "Post")))
 prof  <- sum(na.omit(str_count(data$grade.value, "Prof")))
 dean <- sum(na.omit(str_count(data$grade.value, "Dean")))
 
-
-grade <- data.frame(label=c('Bachelor', 'Master', 'PhD', 'Post Graduate', 'Prof', 'Dean'),
-value=c(bachelor,master, phD, postGraduate, prof, dean))
+levels <- c('Bachelor', 'Master', 'PhD', 'Post Graduate', 'Prof', 'Dean')
+grade <- data.frame(label=levels,
+                    value=c(bachelor,master, phD, postGraduate, prof, dean))
+grade$label <- factor(grade$label, levels=levels)
 
 ggplot(grade, aes(x=label, y=value))  +
   geom_bar(stat = "identity",width=0.3) + theme_minimal() +
-  ggtitle("What is your highest academic grade?") +  xlab("") + ylab("") +
-  theme(text = element_text(size=20),
-        plot.margin = margin(0.5, 1, 1, 0.5, "cm"))
+  ggtitle("What is your academic grade?") +  xlab("") + ylab("") +
+    scale_y_continuous(breaks= pretty_breaks()) +
+    theme(text = element_text(size=20),
+          plot.margin = margin(0.5, 1, 1, 0.5, "cm"))
 
 ggsave("./plots/grade.png", width = 20, height = 20, units = "cm")
 
@@ -116,6 +129,7 @@ ggplot(languages, aes(lang, y=value)) +
   geom_bar(stat = "identity",width=0.3) + theme_minimal() + coord_flip() +
   ggtitle('Which of the following computer languages \n have you already used?') +
     xlab("") + ylab("") +
+    scale_y_continuous(breaks= pretty_breaks()) +
   theme(text = element_text(size=20),
         plot.margin = margin(0.5, 1, 1, 0.5, "cm"))
 
@@ -166,7 +180,8 @@ ggplot(editor , aes(x=label, y=value)) +
   geom_bar(stat = "identity",width=0.3) + theme_minimal() + coord_flip() +
   ggtitle('What text editor do you usually use for programming?') +  xlab("") + ylab("") +
   theme(text = element_text(size=20),
-        plot.margin = margin(0.5, 1, 1, 0.5, "cm"))
+        plot.margin = margin(0.5, 1, 1, 0.5, "cm"))+
+    scale_y_continuous(breaks= pretty_breaks())
 
 ggsave("./plots/editor.png", width = 30, height = 20, units = "cm")
 
@@ -186,6 +201,25 @@ ggplot(terminal, aes(x=factor(label, level = c('Yes',  'No', 'Terminal?')), y=va
         plot.margin = margin(0.5, 1, 1, 0.5, "cm"))
 
 ggsave("./plots/terminal.png", width = 20, height = 20, units = "cm")
+
+
+###################
+
+Yes <- sum(na.omit(str_count(data$git.value , "Yes")))
+No <- sum(na.omit(str_count(data$git.value , "No")))
+Git <- sum(na.omit(str_count(data$git.value , "Git")))
+
+git <- data.frame(label=c('Yes',  'No', 'Git?'),value=c(Yes, No, Git))
+
+ggplot(git, aes(x=factor(label, level = c('Yes',  'No', 'Git?')), y=value)) +
+  geom_bar(stat = "identity",width=0.3) + theme_minimal() +
+  ggtitle("Would you say that you are comfortable \n using a Git?") +  xlab("") +
+  ylab("") +
+  theme(text = element_text(size=20),
+        plot.margin = margin(0.5, 1, 1, 0.5, "cm"))
+
+ggsave("./plots/git.png", width = 20, height = 20, units = "cm")
+
 
 ###################
 
@@ -227,6 +261,7 @@ ggplot(js, aes(x=factor(label, level = c('Arrow functions', 'Map-reduce patterns
 
 ggsave("./plots/js.png", width = 30, height = 20, units = "cm")
 
+
 ###################
 
 Web <- sum(na.omit(str_count(data$project.value , "Web")))
@@ -258,6 +293,16 @@ ggplot(project, aes(x=label, y=value)) +
         plot.margin = margin(0.5, 1, 1, 0.5, "cm"))
 
 ggsave("./plots/project.png", width = 30, height = 20, units = "cm")
+
+
+
+ggplot(data, aes(project.value)) +
+  geom_histogram(stat="count", width=0.3) + theme_minimal() + coord_flip() +
+  ggtitle('I would like to learn:') +  xlab("") + ylab("") +
+  theme(text = element_text(size=20),
+        plot.margin = margin(0.5, 1, 1, 0.5, "cm"))
+
+
 
 ###################
 age <- na.omit(data.frame(rep("All Participants",n), data$age.value))

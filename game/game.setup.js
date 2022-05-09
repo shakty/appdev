@@ -13,8 +13,7 @@
  */
 module.exports = function(settings, stages) {
 
-    var setup;
-    setup = {};
+    let setup = {};
 
     setup.debug = true;
 
