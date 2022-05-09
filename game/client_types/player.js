@@ -207,7 +207,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 mainText: 'All questions are optional.',
                 forms: [
                     {
-                        id: 'project',
+                        id: 'introcourse',
                         mainText: 'Did you take part in the intro course in Nov 2021? ',
                         choices: [
                             'Yes',
